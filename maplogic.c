@@ -1,5 +1,6 @@
-#include "maplogic.h"
 #include <stdlib.h>
+#include "maplogic.h"
+#include "sound.h"
 
 // This function returns true when a row contains three cells of state mark
 int SameRow(tcellstate map[9], unsigned row, tcellstate mark) {
@@ -97,28 +98,33 @@ void AbortMap(tcellstate map[9]) {
             map[i] = cross;
 }
 
-// Adds symbol in a random empty location
-void  RandomAdd(tcellstate map[9], tcellstate v) {
-   unsigned numempty = 0;
-   unsigned done = 0;
-   unsigned i;
-   for (i=0; i<9; i++)
-       if (map[i] == empty)
-           numempty++;
-   if (numempty == 0)
-       return;
-   while (!done) {
-       i = rand() % 9;
-       if (map[i] == empty) {
-           map[i] = v;
-           done = 1;
-       }
-   }
+void CheatMap(tcellstate map[9]) {
+    unsigned i;
+    for (i=0; i<9; i++)
+        if (map[i] == empty)
+            map[i] = circle;
 }
 
+// Adds symbol in a random empty location
+int RandomAdd(tcellstate map[9], tcellstate v)
+{
+    unsigned numempty = 0;
+    unsigned done = 0;
+    unsigned i;
+    for (i = 0; i < 9; i++)
+        if (map[i] == empty)
+            numempty++;
+    if (numempty == 0)
+        return 100;
+    while (!done)
+    {
+        i = rand() % 9;
+        if (map[i] == empty)
+        {
+            map[i] = v;
+            done = 1;
+        }
+    }
 
-
-
-
-
-
+    return i;
+}

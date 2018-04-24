@@ -16,7 +16,14 @@ void InitDisplay() {
     Graphics_setFont(&g_sContext, &g_sFontCmtt16);
     Graphics_clearDisplay(&g_sContext);
 }
-
+void drawComp()
+{
+    Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_RED);
+}
+void drawPla()
+{
+    Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_BLACK);
+}
 void DrawTime(unsigned minutes, unsigned seconds) {
     char buf[5];
     buf[4] = (seconds % 10) + '0';
@@ -50,15 +57,156 @@ void DrawBoard(tcellstate map[9]) {
     Graphics_drawLineH(&g_sContext, 19,        109,    79);
     Graphics_drawLineV(&g_sContext, 49,        19,     109);
     Graphics_drawLineV(&g_sContext, 79,        19,     109);
+/*
+    // Draw standard X O
+    if (map[0] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[0]], -1, 32, 32,
+                                    OPAQUE_TEXT);
+    }
+    if (map[0] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[0]], -1, 32, 32,
+                                    OPAQUE_TEXT);
+    }
+    if (map[1] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[1]], -1, 64, 32,
+                                    OPAQUE_TEXT);
+    }
+    if (map[1] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[1]], -1, 64, 32,
+                                    OPAQUE_TEXT);
+    }
+    if (map[2] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[2]], -1, 96, 32,
+                                    OPAQUE_TEXT);
+    }
+    if (map[2] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[2]], -1, 96, 32,
+                                    OPAQUE_TEXT);
+    }
+    if (map[3] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[3]], -1, 32, 64,
+                                    OPAQUE_TEXT);
+    }
+    if (map[3] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[3]], -1, 32, 64,
+                                    OPAQUE_TEXT);
+    }
+    if (map[4] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[4]], -1, 64, 64,
+                                    OPAQUE_TEXT);
+    }
+    if (map[4] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[4]], -1, 64, 64,
+                                    OPAQUE_TEXT);
+    }
+    if (map[5] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1, 64, 96,
+                                    OPAQUE_TEXT);
+    }
+    if (map[5] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1, 64, 96,
+                                    OPAQUE_TEXT);
+    }
+    if (map[7] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1, 96, 64,
+                                    OPAQUE_TEXT);
+    }
+    if (map[7] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1, 96, 64,
+                                    OPAQUE_TEXT);
+    }
+    if (map[8] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[8]], -1, 96, 96,
+                                    OPAQUE_TEXT);
+    }
+    if (map[8] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[8]], -1, 96, 96,
+                                    OPAQUE_TEXT);
+    }
+    if (map[6] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1, 96, 32,
+                                    OPAQUE_TEXT);
+    }
+    if (map[6] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1, 96, 32,
+                                    OPAQUE_TEXT);
+    }
+    if ((map[0] == empty)||(map[1] == empty)||(map[2] == empty)||(map[3] == empty)||(map[4] == empty)
+           || (map[5] == empty)||(map[6] == empty)||(map[7] == empty)||(map[8] == empty))
+    {
+    }
+        */
+        Graphics_setForegroundColor(&g_sContext, FOREGROUNDCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[0]], -1,  32,  32, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[1]], -1,  64,  32, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[2]], -1,  96,  32, OPAQUE_TEXT);
+
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[3]], -1,  32,  64, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[4]], -1,  64,  64, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1,  96,  64, OPAQUE_TEXT);
+
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1,  32,  96, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1,  64,  96, OPAQUE_TEXT);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[8]], -1,  96,  96, OPAQUE_TEXT);
+
+
+}
+
+void DrawBoardIdle(tcellstate map[9]) {
+    int8_t *symbolMap[3] = {" ", "X", "O"};
+
+    Graphics_setForegroundColor(&g_sContext, LINECOLOR);
+    Graphics_drawLineH(&g_sContext, 19,        109,    49);
+    Graphics_drawLineH(&g_sContext, 19,        109,    79);
+    Graphics_drawLineV(&g_sContext, 49,        19,     109);
+    Graphics_drawLineV(&g_sContext, 79,        19,     109);
 
     // Draw standard X O
     Graphics_setForegroundColor(&g_sContext, FOREGROUNDCOLOR);
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[0]], -1,  32,  32, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[1]], -1,  64,  32, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[2]], -1,  96,  32, OPAQUE_TEXT);
+
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[3]], -1,  32,  64, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[4]], -1,  64,  64, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1,  96,  64, OPAQUE_TEXT);
+
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1,  32,  96, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1,  64,  96, OPAQUE_TEXT);
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[8]], -1,  96,  96, OPAQUE_TEXT);
