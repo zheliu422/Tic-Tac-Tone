@@ -44,7 +44,7 @@ typedef enum
 } state_t1;
 
 static state_t1 states2 = waiting;
-
+//intereupts
 void T32_INT1_IRQHandler()
 {
     unsigned vx;
@@ -62,15 +62,13 @@ void T32_INT1_IRQHandler()
     }
     Timer32_clearInterruptFlag(TIMER32_0_BASE);
 }
-
+// cell map state. As the game proceeds, these
+// locations fill up with crosses and circles
+// until one wins, or it's a tie.
+//this is state for Button S1
+//basically let computer first play
 void ProcessS1(gamestate_t *G, int sec2)
 {
-
-    //static state_t1 states2 = waiting;
-
-    // cell map state. As the game proceeds, these
-    // locations fill up with crosses and circles
-    // until one wins, or it's a tie.
     unsigned w;
     int cir = 9;
     int titleCheck = 0;
@@ -82,7 +80,9 @@ void ProcessS1(gamestate_t *G, int sec2)
         DrawBoard(G->map);
         states2 = playingcross;
         break;
+
         // It's cross's turn to play
+        // cross play is for computer
     case playingcross:
         DrawMessage("Thinking      ", GRAPHICS_COLOR_YELLOW);
         // find a random location available and add a cross
@@ -95,9 +95,11 @@ void ProcessS1(gamestate_t *G, int sec2)
         // check if the game is over
         if (CrossWins(G->map) || Tie(G->map))
             states2 = winning;
-
         break;
-    case playingcircle: //wo
+
+        //this is circle's turn to play
+        //circle play is for user
+    case playingcircle:
         if(titleCheck == 0)
         DrawMessage("Listening      ", GRAPHICS_COLOR_YELLOW);
         cir = DTMFCheck();
@@ -126,11 +128,10 @@ void ProcessS1(gamestate_t *G, int sec2)
             if (CircleWins(G->map) || Tie(G->map))
                    states2 = winning;
         }
-
         break;
+
         // Game is finished. Show the winner
     case winning:
-
         // Highlight circle winning score
         if (w = CircleWins(G->map))
         {
@@ -154,6 +155,7 @@ void ProcessS1(gamestate_t *G, int sec2)
         }
         states2 = waiting2;
         break;
+
         // Wait for button 2
     case waiting2:
         ClearMap(G->map);
@@ -163,13 +165,13 @@ void ProcessS1(gamestate_t *G, int sec2)
         break;
     }
 }
-
+// cell map state. As the game proceeds, these
+// locations fill up with crosses and circles
+// until one wins, or it's a tie.
+//this is state for Button S2
+//basically let user first play
 void ProcessS2(gamestate_t *G, int sec2)
 {
-
-    // cell map state. As the game proceeds, these
-    // locations fill up with crosses and circles
-    // until one wins, or it's a tie.
     unsigned w;
     int cir = 9;
     int titleCheck = 0;
@@ -181,10 +183,10 @@ void ProcessS2(gamestate_t *G, int sec2)
         DrawBoard(G->map);
         states2 = playingcircle;
         break;
+
         // It's cross's turn to play
     case playingcross:
         DrawMessage("Thinking      ", GRAPHICS_COLOR_YELLOW);
-
         // find a random location available and add a cross
         i = RandomAdd(G->map, cross);
         computerSound(i);
@@ -193,11 +195,11 @@ void ProcessS2(gamestate_t *G, int sec2)
 
         // update the playing field
         DrawBoard(G->map);
-
         // check if the game is over
         if (CrossWins(G->map) || Tie(G->map))
             states2 = winning;
         break;
+
     case playingcircle: //wo
         if(titleCheck == 0)
         DrawMessage("Listening      ", GRAPHICS_COLOR_YELLOW);
@@ -228,6 +230,7 @@ void ProcessS2(gamestate_t *G, int sec2)
                    states2 = winning;
         }
         break;
+
         // Game is finished. Show the winner
     case winning:
         // Highlight circle winning score
@@ -377,13 +380,11 @@ state_t ProcessIdle(int sec, int ms50,
 
               localstate = processidle_idle;
               break;
-
         }
     }
-
     return idle;
 }
-
+//this is the title on the top line of the screen
 void drawTitle(int sec3, gamestate_t G)
 {
     typedef enum
@@ -422,22 +423,24 @@ void drawTitle(int sec3, gamestate_t G)
         }
     }
 }
+
 // This is the top-level FSM, which is called from within
 // the cyclic executive. You will have to extend this FSM
 // with the game logic. The FSM takes four inputs:
 //
-//    b1   = 1 when button S1 is pressed, 0 otherwise
-//    b2   = 1 when button S2 is pressed, 0 otherwise
-//    sec  = 1 when the second-interval software timer elapses
+//    S1d is current button status
+//    prev_S1d is previous button status
+//    S2d is current button status
+//    prev_S2d is previous button status
+//    1 when button is pressed, 0 otherwise
 //    ms50 = 1 when the 50ms-interval software timer elapses
-
 void ProcessStep(int S1d, int S2d, int prev_S1d, int prev_S2d, int sec, int ms50, int sec3, int sec2) {
     static state_t S = idle;
     static gamestate_t G;
 
     switch (S) {
 
-    case idle:
+    case idle://on idle state, run screen saver
         drawTitle(sec3, G);
         S = ProcessIdle(sec, ms50, &G);
         if ((prev_S1d != PRESSED) && (S1d == PRESSED))
@@ -450,7 +453,7 @@ void ProcessStep(int S1d, int S2d, int prev_S1d, int prev_S2d, int sec, int ms50
 
     case gameS1:
         ProcessS1(&G, sec2);
-        if ((prev_S1d != PRESSED) && (S1d == PRESSED))
+        if ((prev_S1d != PRESSED) && (S1d == PRESSED)) //surrender
         {
             AbortMap(G.map);
             states2 = winning;
@@ -463,7 +466,7 @@ void ProcessStep(int S1d, int S2d, int prev_S1d, int prev_S2d, int sec, int ms50
             DrawBoard(G.map);
         }
 
-        if (over == 1)
+        if (over == 1) //once decide winner, return to idle state
         {
             S = idle;
             over = 0;
@@ -485,7 +488,7 @@ void ProcessStep(int S1d, int S2d, int prev_S1d, int prev_S2d, int sec, int ms50
             DrawBoard(G.map);
         }
 
-        if (over == 1)
+        if (over == 1) //once decide winner, return to idle state
         {
             S = idle;
             over = 0;
