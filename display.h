@@ -17,8 +17,7 @@ typedef struct {
     int computerscore;
     int humanscore;
 } gamestate_t;
-void drawComp();
-void drawPla();
+
 void InitDisplay();
 void DrawTime   (unsigned minutes, unsigned seconds);
 void DrawMessage(char *s, uint32_t color);

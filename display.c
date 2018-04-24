@@ -4,7 +4,7 @@
 #include "LcdDriver/Crystalfontz128x128_ST7735.h"
 
 Graphics_Context g_sContext;
-
+//initial LCD display
 void InitDisplay() {
     Crystalfontz128x128_Init();
     Crystalfontz128x128_SetOrientation(LCD_ORIENTATION_UP);
@@ -16,14 +16,7 @@ void InitDisplay() {
     Graphics_setFont(&g_sContext, &g_sFontCmtt16);
     Graphics_clearDisplay(&g_sContext);
 }
-void drawComp()
-{
-    Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_RED);
-}
-void drawPla()
-{
-    Graphics_setBackgroundColor(&g_sContext, GRAPHICS_COLOR_BLACK);
-}
+
 void DrawTime(unsigned minutes, unsigned seconds) {
     char buf[5];
     buf[4] = (seconds % 10) + '0';
@@ -34,11 +27,13 @@ void DrawTime(unsigned minutes, unsigned seconds) {
     Graphics_drawStringCentered(&g_sContext, (int8_t *) buf, 5, 64, 120, OPAQUE_TEXT);
 }
 
+//draw message function
 void DrawMessage(char *s, uint32_t color) {
     Graphics_setForegroundColor(&g_sContext, color);
     Graphics_drawStringCentered(&g_sContext, (int8_t *) s, -1, 64, 8, OPAQUE_TEXT);
 }
 
+//score function to display all scores
 void DrawScore(int computerscore, int humanscore, uint32_t color) {
     char buf[16] = "Score XX - XX ";
     buf[ 7] =  (char) ('0' + ( computerscore % 10));
@@ -49,6 +44,7 @@ void DrawScore(int computerscore, int humanscore, uint32_t color) {
     Graphics_drawStringCentered(&g_sContext, (int8_t *) buf, -1, 64, 8, OPAQUE_TEXT);
 }
 
+//draw empty or X or O on related places
 void DrawBoard(tcellstate map[9]) {
     int8_t *symbolMap[3] = {" ", "X", "O"};
 
@@ -187,7 +183,7 @@ void DrawBoard(tcellstate map[9]) {
 
 
 }
-
+//this draw board function is used for screen saver
 void DrawBoardIdle(tcellstate map[9]) {
     int8_t *symbolMap[3] = {" ", "X", "O"};
 
@@ -212,6 +208,7 @@ void DrawBoardIdle(tcellstate map[9]) {
     Graphics_drawStringCentered(&g_sContext, symbolMap[map[8]], -1,  96,  96, OPAQUE_TEXT);
 }
 
+//highlight winning row and col
 void DrawWinner(tcellstate map[9], int winner, uint32_t color) {
     int8_t *symbolMap[3] = {" ", "X", "O"};
 

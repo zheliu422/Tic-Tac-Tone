@@ -80,6 +80,10 @@ void DTMFReset() {
     ResetGoertzel(&t1477);
 }
 
+//check input frequency
+//different combination connect to different location
+//for example, keyboard 1 represent 697Hz and 1209Hz
+//if I get both 697Hz and 1209Hz, then return 0 for future use
 int DTMFCheck() {
     unsigned p697  = PowerGoertzel(  &t697);
     unsigned p770  = PowerGoertzel(  &t770);
@@ -110,7 +114,12 @@ int DTMFCheck() {
         return 9;
 }
 
-void drawCir(gamestate_t *G,int winner)
+//from the last function, if I have 0 for the return
+//that means I have 697Hz and 1209Hz
+//so 697Hz and 1209Hz corresponding to map location 0
+//location 0 is top left corner
+//then place a circle on this place
+void drawCir(gamestate_t *G, int winner)
 {
     switch(winner)
     {

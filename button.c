@@ -6,16 +6,19 @@
 static tSWTimer S1bouncedelay;
 static tSWTimer S2bouncedelay;
 
+//initial button 1
 void InitButtonS1() {
     GPIO_setAsInputPin (GPIO_PORT_P5, GPIO_PIN1); // upper switch S1 on BoostXL
     InitSWTimer(&S1bouncedelay, TIMER32_1_BASE, (SYSTEMCLOCK/10)); // 10Hz = 100ms
 }
 
+//initial button 2
 void InitButtonS2() {
     GPIO_setAsInputPin (GPIO_PORT_P3, GPIO_PIN5); // lower switch S2 on BoostXL
     InitSWTimer(&S2bouncedelay, TIMER32_1_BASE, (SYSTEMCLOCK/10)); // 10Hz = 100ms
 }
 
+//button s1 pressed
 int ButtonS1Pressed() {
     typedef enum {stable0, trans0, stable1, trans1} state_t;
     static state_t S = stable0;
@@ -59,6 +62,7 @@ int ButtonS1Pressed() {
     return rval;
 }
 
+//button s2 pressed
 int ButtonS2Pressed() {
     typedef enum {stable0, trans0, stable1, trans1} state_t;
     static state_t S = stable0;

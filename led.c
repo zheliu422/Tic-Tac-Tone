@@ -1,7 +1,8 @@
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 
 //------------------------------------------
-// LED API
+//LED API
+//initialize LED on booster pack
 void InitLEDs() {
     GPIO_setAsOutputPin    (GPIO_PORT_P2,    GPIO_PIN6);   // color LED red on sensor board
     GPIO_setAsOutputPin    (GPIO_PORT_P2,    GPIO_PIN4);   // color LED green on sensor board
