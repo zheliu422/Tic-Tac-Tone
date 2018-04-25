@@ -53,7 +53,7 @@ void DrawBoard(tcellstate map[9]) {
     Graphics_drawLineH(&g_sContext, 19,        109,    79);
     Graphics_drawLineV(&g_sContext, 49,        19,     109);
     Graphics_drawLineV(&g_sContext, 79,        19,     109);
-/*
+
     // Draw standard X O
     if (map[0] == cross)
     {
@@ -118,25 +118,37 @@ void DrawBoard(tcellstate map[9]) {
     if (map[5] == cross)
     {
         Graphics_setForegroundColor(&g_sContext, XCOLOR);
-        Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1, 64, 96,
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1, 96, 64,
                                     OPAQUE_TEXT);
     }
     if (map[5] == circle)
     {
         Graphics_setForegroundColor(&g_sContext, OCOLOR);
-        Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1, 64, 96,
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[5]], -1, 96, 64,
+                                    OPAQUE_TEXT);
+    }
+    if (map[6] == cross)
+    {
+        Graphics_setForegroundColor(&g_sContext, XCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1, 32, 96,
+                                    OPAQUE_TEXT);
+    }
+    if (map[6] == circle)
+    {
+        Graphics_setForegroundColor(&g_sContext, OCOLOR);
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1, 32, 96,
                                     OPAQUE_TEXT);
     }
     if (map[7] == cross)
     {
         Graphics_setForegroundColor(&g_sContext, XCOLOR);
-        Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1, 96, 64,
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1, 64, 96,
                                     OPAQUE_TEXT);
     }
     if (map[7] == circle)
     {
         Graphics_setForegroundColor(&g_sContext, OCOLOR);
-        Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1, 96, 64,
+        Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1, 64, 96,
                                     OPAQUE_TEXT);
     }
     if (map[8] == cross)
@@ -151,23 +163,14 @@ void DrawBoard(tcellstate map[9]) {
         Graphics_drawStringCentered(&g_sContext, symbolMap[map[8]], -1, 96, 96,
                                     OPAQUE_TEXT);
     }
-    if (map[6] == cross)
-    {
-        Graphics_setForegroundColor(&g_sContext, XCOLOR);
-        Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1, 96, 32,
-                                    OPAQUE_TEXT);
-    }
-    if (map[6] == circle)
-    {
-        Graphics_setForegroundColor(&g_sContext, OCOLOR);
-        Graphics_drawStringCentered(&g_sContext, symbolMap[map[6]], -1, 96, 32,
-                                    OPAQUE_TEXT);
-    }
+
+    /*
     if ((map[0] == empty)||(map[1] == empty)||(map[2] == empty)||(map[3] == empty)||(map[4] == empty)
            || (map[5] == empty)||(map[6] == empty)||(map[7] == empty)||(map[8] == empty))
     {
     }
-        */
+
+
         Graphics_setForegroundColor(&g_sContext, FOREGROUNDCOLOR);
         Graphics_drawStringCentered(&g_sContext, symbolMap[map[0]], -1,  32,  32, OPAQUE_TEXT);
         Graphics_drawStringCentered(&g_sContext, symbolMap[map[1]], -1,  64,  32, OPAQUE_TEXT);
@@ -181,7 +184,7 @@ void DrawBoard(tcellstate map[9]) {
         Graphics_drawStringCentered(&g_sContext, symbolMap[map[7]], -1,  64,  96, OPAQUE_TEXT);
         Graphics_drawStringCentered(&g_sContext, symbolMap[map[8]], -1,  96,  96, OPAQUE_TEXT);
 
-
+*/
 }
 //this draw board function is used for screen saver
 void DrawBoardIdle(tcellstate map[9]) {
@@ -257,4 +260,15 @@ void DrawWinner(tcellstate map[9], int winner, uint32_t color) {
         break;
     }
 
+}
+
+void DisplayMaxMin(unsigned max) {
+    char maxstr[ 11] = "Meter: XXXX";
+    char hexstr[16] = "0123456789ABCDEF";
+    maxstr[7] = hexstr[(max >> 12) & 0xF];
+    maxstr[8] = hexstr[(max >>  8) & 0xF];
+    maxstr[9] = hexstr[(max >>  4) & 0xF];
+    maxstr[10] = hexstr[(max      ) & 0xF];
+
+    Graphics_drawStringCentered(&g_sContext, (int8_t *) maxstr, 11,  64,  120, OPAQUE_TEXT);
 }

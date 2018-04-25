@@ -3,7 +3,7 @@
 #include "maplogic.h"
 #include "sound.h"
 
-#define SOUND_HOLD 8096
+#define SOUND_HOLD 6096
 
 // TO BE DEFINED BY YOU
 //

@@ -12,6 +12,7 @@
 #define XCOLOR GRAPHICS_COLOR_DEEP_PINK
 #define OCOLOR GRAPHICS_COLOR_GAINSBORO
 
+
 typedef struct {
     tcellstate map[9];
     int computerscore;
@@ -25,5 +26,5 @@ void DrawScore  (int computerscore, int humanscore, uint32_t color);
 void DrawBoard  (tcellstate map[9]);
 void DrawBoardIdle  (tcellstate map[9]);
 void DrawWinner (tcellstate map[9],int winner, uint32_t color);
-
+void DisplayMaxMin(unsigned max);
 #endif /* DISPLAY_H_ */

@@ -15,6 +15,7 @@
 
 int over = 0; //flag
 int check = 1;
+unsigned glbMax = 0;
 
 typedef enum {idle, gameS1, gameS2} state_t;
 unsigned glbListening = 0;
@@ -44,7 +45,7 @@ typedef enum
 } state_t1;
 
 static state_t1 states2 = waiting;
-//intereupts
+//interrupts
 void T32_INT1_IRQHandler()
 {
     unsigned vx;
@@ -52,6 +53,8 @@ void T32_INT1_IRQHandler()
     if (glbListening)
     {
         vx = GetSampleMicrophone();
+        if (vx > glbMax)
+            glbMax = vx;
         DTMFAddSample(vx);
         SamplesListened++;
         if (SamplesListened == 400)
@@ -77,14 +80,14 @@ void ProcessS1(gamestate_t *G, int sec2)
     {
     case waiting:
         ClearMap(G->map);
-        DrawBoard(G->map);
+        DrawBoardIdle(G->map);
         states2 = playingcross;
         break;
 
         // It's cross's turn to play
         // cross play is for computer
     case playingcross:
-        DrawMessage("Thinking      ", GRAPHICS_COLOR_YELLOW);
+        DrawMessage("Thinking...   ", GRAPHICS_COLOR_YELLOW);
         // find a random location available and add a cross
         i = RandomAdd(G->map, cross);
         computerSound(i);
@@ -101,7 +104,8 @@ void ProcessS1(gamestate_t *G, int sec2)
         //circle play is for user
     case playingcircle:
         if(titleCheck == 0)
-        DrawMessage("Listening      ", GRAPHICS_COLOR_YELLOW);
+        DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
+        DisplayMaxMin(glbMax);
         cir = DTMFCheck();
         if (cir == 9)
         {
@@ -159,7 +163,7 @@ void ProcessS1(gamestate_t *G, int sec2)
         // Wait for button 2
     case waiting2:
         ClearMap(G->map);
-        DrawBoard(G->map);
+        DrawBoardIdle(G->map);
         over = 1;
         states2 = waiting;
         break;
@@ -180,13 +184,13 @@ void ProcessS2(gamestate_t *G, int sec2)
     {
     case waiting:
         ClearMap(G->map);
-        DrawBoard(G->map);
+        DrawBoardIdle(G->map);
         states2 = playingcircle;
         break;
 
         // It's cross's turn to play
     case playingcross:
-        DrawMessage("Thinking      ", GRAPHICS_COLOR_YELLOW);
+        DrawMessage("Thinking...   ", GRAPHICS_COLOR_YELLOW);
         // find a random location available and add a cross
         i = RandomAdd(G->map, cross);
         computerSound(i);
@@ -202,8 +206,10 @@ void ProcessS2(gamestate_t *G, int sec2)
 
     case playingcircle: //wo
         if(titleCheck == 0)
-        DrawMessage("Listening      ", GRAPHICS_COLOR_YELLOW);
+        DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
+
         cir = DTMFCheck();
+        DisplayMaxMin(glbMax);
         if (cir == 9)
         {
             titleCheck = 0;
@@ -259,7 +265,7 @@ void ProcessS2(gamestate_t *G, int sec2)
         // Wait for button 2
     case waiting2:
         ClearMap(G->map);
-        DrawBoard(G->map);
+        DrawBoardIdle(G->map);
         over = 1;
         states2 = waiting;
         break;
