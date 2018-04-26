@@ -103,19 +103,16 @@ void ProcessS1(gamestate_t *G, int sec2)
         //this is circle's turn to play
         //circle play is for user
     case playingcircle:
-        if(titleCheck == 0)
-        DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
         DisplayMaxMin(glbMax);
         cir = DTMFCheck();
         if (cir == 9)
         {
-            titleCheck = 0;
+            DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
             glbListening = 1;
             cir = DTMFCheck();
         }
         while (G->map[cir] != empty && (cir != 9))
         {
-            titleCheck = 1;
             DTMFReset();
             DrawMessage("Illegal Move ", GRAPHICS_COLOR_YELLOW);
             glbListening = 1;
@@ -123,8 +120,8 @@ void ProcessS1(gamestate_t *G, int sec2)
         }
         if ((G->map[cir] == empty) && (cir != 9))
         {
-            titleCheck = 0;
             DTMFReset();
+            DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
             glbListening = 0;
             drawCir(G, cir);
             states2 = playingcross;
@@ -178,7 +175,7 @@ void ProcessS2(gamestate_t *G, int sec2)
 {
     unsigned w;
     int cir = 9;
-    int titleCheck = 0;
+
     int i = 20;
     switch (states2)
     {
@@ -205,20 +202,19 @@ void ProcessS2(gamestate_t *G, int sec2)
         break;
 
     case playingcircle: //wo
-        if(titleCheck == 0)
-        DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
+        //if(titleCheck == 0)
+        //DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
 
         cir = DTMFCheck();
         DisplayMaxMin(glbMax);
         if (cir == 9)
         {
-            titleCheck = 0;
+            DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
             glbListening = 1;
             cir = DTMFCheck();
         }
         while (G->map[cir] != empty && (cir != 9))
         {
-            titleCheck = 1;
             DTMFReset();
             DrawMessage("Illegal Move ", GRAPHICS_COLOR_YELLOW);
             glbListening = 1;
@@ -226,7 +222,7 @@ void ProcessS2(gamestate_t *G, int sec2)
         }
         if ((G->map[cir] == empty) && (cir != 9))
         {
-            titleCheck = 0;
+            DrawMessage("Listening...   ", GRAPHICS_COLOR_YELLOW);
             DTMFReset();
             glbListening = 0;
             drawCir(G, cir);
