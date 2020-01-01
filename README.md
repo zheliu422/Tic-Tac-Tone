@@ -1,1 +1,4 @@
-# application-1
+# Microcontroller TicTacToe
+This project implements a well-known game "[tic tac toe](https://en.wikipedia.org/wiki/Tic-tac-toe)" on C. There are two players of the game, computer (using char ‘X’) and user (using char ‘O’). Different from traditional “tic tac toe” game, user must use different frequency combinations to drive this game. In other word, the location that user puts the “O” character is based on sound input that recorded by on board microphone. 
+User can select to let computer play first or let user play first. So, if a column or row or diagonal contains a connection of ‘X’ or ‘O’ marks, then the corresponding player will win that round. Winner will be rewarded 1-point. Points will be displayed on top of the LCD screen. There is a chance that the game is tied. Which means there’s no three ‘X’ or ‘O’ marks form a straight row or column or diagonal. Once a tied game occurs, no player will receive points. 
+If the user wins the round, then “[Bow Down To Washington](https://www.youtube.com/watch?v=6GPhX-vor-k)" will be played with different LED blinking!
