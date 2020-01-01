@@ -46,7 +46,7 @@ void DrawScore(int computerscore, int humanscore, uint32_t color) {
 
 //draw empty or X or O on related places
 void DrawBoard(tcellstate map[9]) {
-    int8_t *symbolMap[3] = {" ", "X", "O"};
+    int8_t *symbolMap[3] = {" ", "O", "X"};
 
     Graphics_setForegroundColor(&g_sContext, LINECOLOR);
     Graphics_drawLineH(&g_sContext, 19,        109,    49);
@@ -188,7 +188,7 @@ void DrawBoard(tcellstate map[9]) {
 }
 //this draw board function is used for screen saver
 void DrawBoardIdle(tcellstate map[9]) {
-    int8_t *symbolMap[3] = {" ", "X", "O"};
+    int8_t *symbolMap[3] = {" ", "O", "X"};
 
     Graphics_setForegroundColor(&g_sContext, LINECOLOR);
     Graphics_drawLineH(&g_sContext, 19,        109,    49);
@@ -213,7 +213,7 @@ void DrawBoardIdle(tcellstate map[9]) {
 
 //highlight winning row and col
 void DrawWinner(tcellstate map[9], int winner, uint32_t color) {
-    int8_t *symbolMap[3] = {" ", "X", "O"};
+    int8_t *symbolMap[3] = {" ", "O", "X"};
 
     Graphics_setForegroundColor(&g_sContext, color);
 
